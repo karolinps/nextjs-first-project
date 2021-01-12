@@ -3,6 +3,12 @@
   position: absolute;
   top: 10%;
 }
+.sitePageHeader {
+  padding: 2px 12px;
+}
+.sitePageHeader span {
+  color: white;
+}
 .card {
   margin: 1rem;
   flex-basis: 45%;
