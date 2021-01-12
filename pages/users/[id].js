@@ -18,7 +18,7 @@ const DetailUser = ({ user }) => {
           subTitle={`Detalle Usuario ${user.id}`}
         />
         <Row className={styles.card}>
-          <Col sm={16}>
+          <Col sm={18} md={20}>
             <h1>{user.name}</h1>
             <p>Email: {user.email}</p>
             <p>Username: {user.username}</p>
@@ -26,7 +26,7 @@ const DetailUser = ({ user }) => {
             <p>City: {user.address.city}</p>
             <p>Company: {user.company.name}</p>
           </Col>
-          <Col sm={8}>
+          <Col sm={6} md={4}>
             <Avatar size={80} style={{ backgroundColor: "rgb(208, 104, 104)" }}>
               {user.name.charAt(0)}
             </Avatar>
