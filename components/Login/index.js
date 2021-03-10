@@ -1,17 +1,36 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import Cookies from "universal-cookie";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 
-import consts from "../../consts";
 import styles from "../Login/Login.module.css";
 
-export default function Login({ redirectPath }) {
+import api from "../../api";
+import { setUserSession } from "../../services/auth";
+
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  const handleLogin = () => {
+    api.auth
+      .login(email, password)
+      .then((res) => {
+        setUserSession(res.data.token, res.data.data);
+        message.success(res.data.message);
+        setTimeout(() => {
+          router.push("/users");
+        }, 2000);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          message.error(err.response.data.message);
+        } else {
+          message.error("Ha ocurrido, intente de nuevo");
+        }
+      });
+  };
   return (
     <Form className={styles.form}>
       <Form.Item
@@ -46,18 +65,7 @@ export default function Login({ redirectPath }) {
         />
       </Form.Item>
       <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            const cookies = new Cookies();
-            cookies.set(consts.password, password, {
-              path: "/",
-            });
-            window.location.href = "/users";
-          }}
-        >
+        <Button type="primary" htmlType="submit" onClick={handleLogin}>
           Submit
         </Button>
       </Form.Item>

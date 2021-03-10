@@ -1,33 +1,31 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Cookies from "universal-cookie";
 import Users from "../../components/Users/index";
-import consts from "../../consts";
+import { removeUserSession, getToken } from "../../services/auth";
 
 const ListUsers = (props) => {
   const router = useRouter();
-  const { hasReadPermission, users } = props;
 
   useEffect(() => {
-    if (!hasReadPermission) {
+    if (!getToken()) {
       router.push("/login");
     }
   }, []);
-  if (hasReadPermission) {
+  if (getToken()) {
     return (
-      <>
+      <div style={{ position: "relative" }}>
         <button
+          style={{ position: "absolute", right: 0, top: 15 }}
           onClick={(e) => {
             e.preventDefault();
-            const cookies = new Cookies();
-            cookies.remove(consts.password, { path: "/" });
-            window.location.href = "/login";
+            removeUserSession();
+            router.push("/login");
           }}
         >
           Logout
         </button>
-        <Users title="Usuarios" data={users} />
-      </>
+        <Users title="Usuarios" data={props.users} />
+      </div>
     );
   } else {
     return <p>Redirecting...</p>;

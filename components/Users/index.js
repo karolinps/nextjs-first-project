@@ -12,7 +12,7 @@ export default function List(props) {
   };
   return (
     <>
-      <h1 style={{ color: "#FFF" }}>{props.title}</h1>
+      <h1 style={{ color: "#FFF", margin: "auto 15px" }}>{props.title}</h1>
       <section className={styles.container}>
         <div className={styles.grid}>
           {users.map((el) => {
