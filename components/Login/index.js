@@ -64,6 +64,9 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Item>
+      <p style={{ color: "white" }}>
+        Email: email@example.com / password: 123456
+      </p>
       <Form.Item>
         <Button type="primary" htmlType="submit" onClick={handleLogin}>
           Submit
